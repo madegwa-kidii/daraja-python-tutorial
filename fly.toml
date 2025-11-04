@@ -1,0 +1,34 @@
+# fly.toml file generated for daraja-python-tutorial
+# FastAPI app deployment using Dockerfile
+
+app = "daraja-python-tutorial"  # 👈 replace with your actual Fly.io app name
+primary_region = "ams"          # 👈 pick a region close to your users (e.g., "nbo" for Nairobi if available)
+
+[build]
+  # Fly will use your Dockerfile automatically
+  dockerfile = "Dockerfile"
+
+[env]
+  # Uvicorn configuration
+  PORT = "8000"
+  PYTHONUNBUFFERED = "1"
+  PYTHONDONTWRITEBYTECODE = "1"
+  ENVIRONMENT = "production"
+
+[http_service]
+  internal_port = 8000
+  force_https = true
+  auto_stop_machines = true
+  auto_start_machines = true
+  min_machines_running = 1
+  processes = ["app"]
+
+  [http_service.concurrency]
+    type = "connections"
+    hard_limit = 25
+    soft_limit = 20
+
+[[vm]]
+  memory = "512MB"
+  cpu_kind = "shared"
+  cpus = 1
