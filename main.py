@@ -31,3 +31,6 @@ async def callback(request: Request):
     print('callback: ',stk_callback_res )
 
     return stk_callback_res
+
+
+#  http://127.0.0.1:8000/docs
